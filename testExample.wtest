@@ -1,0 +1,36 @@
+import Gladiadores.*
+import Armas.*
+import Protecciones.*
+import Grupo_de_gladiadores.*
+import Coliseo.*
+
+describe "Test de armas" {
+  test "Test de arma de filo con longitud 0.5 y filo 20 deberia dar un valor de 
+  ataque de 10" {
+    const espadasDelCaos = new ArmasDeFilo(filo = 20, longitud = 0.5)
+    assert.equals(10, espadasDelCaos.valorDeAtaque())
+  }
+
+  test "Un arma de filo con filo 0 deberia dar un valor de ataque de 0" {
+    const espadaViejisima = new ArmasDeFilo(filo = 0, longitud = 10)
+    assert.equals(0, espadaViejisima.valorDeAtaque())
+  }
+
+  test "Un arma contundente con peso 10 deberia dar un valor de ataque de 10" {
+    const maza = new ArmasContundentes(peso = 10)
+    assert.equals(10, maza.valorDeAtaque())
+  }
+}
+
+describe "Test de mirmillones" {
+
+    b
+    test "Un mirmillon empieza con 100 de vida" {
+    const mirmillon = new Mirmillones()
+}
+
+  test "Un gladiador sin casco ni escudo deberia tener una defensa de 0" {
+    const gladiador = new Gladiadores()
+    assert.equals(0, gladiador.defensa())
+  }
+}

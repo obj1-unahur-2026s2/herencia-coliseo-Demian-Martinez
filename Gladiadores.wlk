@@ -1,40 +1,6 @@
-class Armas{
-  method valorDeAtaque()
-}
-
-class ArmasDeFilo inherits Armas{
-  // El valor del filo es un numero entre 0 y 1
-  const filo
-  const longitud
-
-  override method valorDeAtaque(){
-    return filo * longitud
-  }
-}
-
-class ArmasContundentes inherits Armas{
-  const peso
-
-  override method valorDeAtaque(){
-    return peso
-  }
-}
-
-class Protecciones{
-  method valorDeProteccion(gladiador)
-}
-
-class Cascos inherits Protecciones{
-  override method valorDeProteccion(gladiador){
-    return 10
-  }
-}
-
-class Escudos inherits Protecciones{
-  override method valorDeProteccion(gladiador){
-    return 5 + gladiador.destreza() * 0.1
-  }
-}
+import Armas.*
+import Protecciones.*
+import Grupo_de_gladiadores.*
 
 class Gladiadores{
   var cascoEquipado
@@ -70,6 +36,20 @@ class Gladiadores{
   }
 
   method poderDeAtaque()
+
+  method crearGrupoConOtroGladiador(otroGladiador)
+
+  method curar(){
+    vida = 100
+  }
+
+  method pelearRound(rival){
+    self.elegirCampeon().atacar(rival.elegirCampeon())  
+  }
+
+  method elegirCampeon(){
+    return self
+  }
 }
 
 class Mirmillones inherits Gladiadores{
@@ -109,6 +89,13 @@ class Mirmillones inherits Gladiadores{
   override method poderDeAtaque(){
     return armaEquipada.valorDeAtaque() + fuerza
   }
+
+  override method crearGrupoConOtroGladiador(otroGladiador){
+    const grupoDeMirmillones = new GruposDeGladiadores(
+      gladiadores = [self, otroGladiador],
+      nombreDeGrupo = "mirmillolandia"
+      )
+  }
 }
 
 class Dimachaerus inherits Gladiadores{
@@ -140,6 +127,13 @@ class Dimachaerus inherits Gladiadores{
 
   override method poderDeAtaque(){
     return armasEquipadas.sum({a => a.valorDeAtaque()}) + self.fuerza()
+  }
+
+  override method crearGrupoConOtroGladiador(otroGladiador){
+    const grupoDeDimachaerus = new GruposDeGladiadores(
+      gladiadores = [self, otroGladiador],
+      nombreDeGrupo = "D-" + (self.poderDeAtaque() + otroGladiador.poderDeAtaque())
+      )
   }
 }
 
