@@ -3,8 +3,6 @@ import Protecciones.*
 import Grupo_de_gladiadores.*
 
 class Gladiadores{
-  var cascoEquipado
-  var escudoEquipado
   var vida = 100
 
   method defensa()
@@ -12,14 +10,6 @@ class Gladiadores{
   method destreza()
 
   method fuerza()
-
-  method cambiarCasco(nuevoCasco){
-    cascoEquipado = nuevoCasco
-  }
-
-  method cambiarEscudo(nuevoEscudo){
-    escudoEquipado = nuevoEscudo
-  }
 
   method cambiarDeArma(nuevoArma, armaAQuitar)
 
@@ -55,7 +45,9 @@ class Gladiadores{
 class Mirmillones inherits Gladiadores{
   /** Los mirmillones pelean en general con una espada o gladius, y un escudo
   o casco*/
-  
+
+  var cascoEquipado
+  var escudoEquipado
   var armaEquipada
   var fuerza
 
@@ -72,9 +64,17 @@ class Mirmillones inherits Gladiadores{
   }
 
   override method defensa(){
-    return cascoEquipado.valorDeProteccion() + 
-    escudoEquipado.valorDeProteccion() + 
+    return cascoEquipado.valorDeProteccion(self) + 
+    escudoEquipado.valorDeProteccion(self) + 
     self.destreza()
+  }
+
+  method cambiarCasco(nuevoCasco){
+    cascoEquipado = nuevoCasco
+  }
+
+  method cambiarEscudo(nuevoEscudo){
+    escudoEquipado = nuevoEscudo
   }
 
   override method cambiarDeArma(nuevoArma, armaAQuitar){
@@ -134,20 +134,6 @@ class Dimachaerus inherits Gladiadores{
       gladiadores = [self, otroGladiador],
       nombreDeGrupo = "D-" + (self.poderDeAtaque() + otroGladiador.poderDeAtaque())
       )
+    return grupoDeDimachaerus.gladiadores()
   }
 }
-
-//const kratos = new Mirmillones(armaEquipada = espadasDelCaos, cascoEquipado = casquito, escudoEquipado = escudoDeValquiria, destreza = 15, fuerzaPromedio = 500)
-/*
-const kratos = new Dimachaerus(
-    armaEquipada = espadasDelCaos,
-    armasEquipadas = [espadasDelCaos], 
-    cascoEquipado = casquito, 
-    escudoEquipado = escudoDeValquiria, 
-    destreza = 15, 
-    fuerza = 500
-  )
-const espadasDelCaos = new ArmasDeFilo(filo = 1, longitud = 3)
-const escudoDeValquiria = new Escudos()
-const casquito = new Cascos()
-*/

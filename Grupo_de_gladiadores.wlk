@@ -5,6 +5,10 @@ class GruposDeGladiadores{
   const gladiadores
   var peleasParticipadas = 0
 
+  method gladiadores(){
+    return gladiadores
+  }
+
   method agregarGladiadorAGrupo(gladiador){
     gladiadores.add(gladiador)
   }

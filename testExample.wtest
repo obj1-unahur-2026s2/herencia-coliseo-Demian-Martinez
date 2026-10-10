@@ -24,13 +24,148 @@ describe "Test de armas" {
 
 describe "Test de mirmillones" {
 
-    b
+  const espadasDelCaos = new ArmasDeFilo(filo = 1, longitud = 15)
+  const escudoDeValquiria = new Escudos()
+  const casquito = new Cascos()
+  const espadaViejisima = new ArmasDeFilo(filo = 0, longitud = 30)
+  
     test "Un mirmillon empieza con 100 de vida" {
-    const mirmillon = new Mirmillones()
+    const mirmillon = new Mirmillones(
+      cascoEquipado = casquito,
+      escudoEquipado = escudoDeValquiria, 
+      armaEquipada = espadasDelCaos, 
+      fuerza = 500
+      )
+    assert.equals(100, mirmillon.vida())
+  }
+
+  test "Tiene 15 de destreza" {
+    const mirmillon = new Mirmillones(
+      cascoEquipado = casquito,
+      escudoEquipado = escudoDeValquiria, 
+      armaEquipada = espadasDelCaos, 
+      fuerza = 500
+      )
+    assert.equals(15, mirmillon.destreza())
+  }
+
+  test "Su poder de ataque suma el valor de ataque del arma equipada y su fuerza
+  deberia dar 65" {
+    const mirmillon = new Mirmillones(
+      cascoEquipado = casquito,
+      escudoEquipado = escudoDeValquiria, 
+      armaEquipada = espadasDelCaos, 
+      fuerza = 50
+      )
+    assert.equals(65, mirmillon.poderDeAtaque())
+  }
+
+  test "Si le cambiamos a un arma con valor de ataque 0 su poder de ataque
+  deberia dar 50" {
+    const mirmillon = new Mirmillones(
+      cascoEquipado = casquito,
+      escudoEquipado = escudoDeValquiria, 
+      armaEquipada = espadasDelCaos, 
+      fuerza = 50
+      )
+    mirmillon.cambiarDeArma(espadaViejisima, espadasDelCaos)
+    assert.equals(50, mirmillon.poderDeAtaque())
+  }
+
+  test "Su defensa suma su destreza mas el valor de su defensa asi que deberia
+  dar 31.5" {
+    const mirmillon = new Mirmillones(
+      cascoEquipado = casquito,
+      escudoEquipado = escudoDeValquiria, 
+      armaEquipada = espadasDelCaos, 
+      fuerza = 50
+      )
+    assert.equals(31.5, mirmillon.defensa())
+  }
 }
 
-  test "Un gladiador sin casco ni escudo deberia tener una defensa de 0" {
-    const gladiador = new Gladiadores()
-    assert.equals(0, gladiador.defensa())
+describe "Test de dimachaerus"{
+
+  const escudoDeValquiria = new Escudos()
+  const casquito = new Cascos()
+  const espadasDelCaos = new ArmasDeFilo(filo = 1, longitud = 15)
+  const espadaViejisima = new ArmasDeFilo(filo = 0, longitud = 30)
+  const hachaLeviatan = new ArmasContundentes(peso = 20)
+  const martilloMjolnir = new ArmasContundentes(peso = 500)
+  const dimachaerus = new Dimachaerus(
+      armasEquipadas = [espadasDelCaos, hachaLeviatan],
+      destreza = 100
+      )
+  const mirmillon = new Mirmillones(
+      cascoEquipado = casquito,
+      escudoEquipado = escudoDeValquiria, 
+      armaEquipada = espadasDelCaos, 
+      fuerza = 500
+      )
+  const dimachaerus2 = new Dimachaerus(
+      armasEquipadas = [espadaViejisima, martilloMjolnir],
+      destreza = 10
+      )
+
+  test "Un dimachaerus empieza con 10 de fuerza"{
+    assert.equals(10, dimachaerus.fuerza())
+  }
+
+  test "Su defensa equivale a la mitad de su destreza asi que deberia dar 50"{
+    assert.equals(50, dimachaerus.defensa())
+  }
+
+  test "Su valor de ataque es la suma del valor de ataque de sus armas y su 
+  propia fuerza asi que deberia dar 45"{
+    assert.equals(45, dimachaerus.poderDeAtaque())
+  }
+
+  test "cada ataque suma 1 de destreza asi que despues de un atque deberia
+  tener 101 de destreza"{
+    dimachaerus.atacar(mirmillon)
+    assert.equals(101, dimachaerus.destreza())
+  }
+
+  test "Si dimachaerus ataca a dimachaerus2, la vida de dimachaerus ser -359.5. 
+  dimachaerus muere"{
+    dimachaerus.atacar(dimachaerus2)
+    assert.equals(-359.5, dimachaerus.vida())
+  }
+}
+
+describe "Test de grupos y peleas"{
+
+  const escudoDeValquiria = new Escudos()
+  const casquito = new Cascos()
+  const espadasDelCaos = new ArmasDeFilo(filo = 1, longitud = 15)
+  const espadaViejisima = new ArmasDeFilo(filo = 0, longitud = 30)
+  const hachaLeviatan = new ArmasContundentes(peso = 20)
+  const martilloMjolnir = new ArmasContundentes(peso = 500)
+  const dimachaerus = new Dimachaerus(
+      armasEquipadas = [espadasDelCaos, hachaLeviatan],
+      destreza = 100
+      )
+  const mirmillon = new Mirmillones(
+      cascoEquipado = casquito,
+      escudoEquipado = escudoDeValquiria, 
+      armaEquipada = espadasDelCaos, 
+      fuerza = 500
+      )
+  const dimachaerus2 = new Dimachaerus(
+      armasEquipadas = [espadaViejisima, martilloMjolnir],
+      destreza = 10
+      )
+
+  method intialize(){
+    dimachaerus.crearGrupoConOtroGladiador(mirmillon)
+  }
+  
+  test "dimachaerus crea un grupo con mirmillon"{
+    assert.equals([dimachaerus, mirmillon], dimachaerus.crearGrupoConOtroGladiador(mirmillon))
+  }
+
+  test "dimachaerus se enoja y echa a mirmillon de su grupo"{
+    GruposDeGladiadores.quitarGladiadorDeGrupo(mirmillon)
+    assert.equals([dimachaerus], dimachaerus.crearGrupoConOtroGladiador(mirmillon))
   }
 }
